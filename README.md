@@ -57,11 +57,11 @@ This section of the project was tough, as the information returned from this API
 
 Parsing through this information had a few challenges:
 
-  * First being pet information was listed in the "data", with the picture links in the "included" dictionary. Pet listings would have a picture ID value that corresponded with a picture ID value in the included dictionary relating to 3 photos (small, medium, and large file sizes of the same photo). The difficult part was that the "included" data didn't only return pictures as dictionary items, it also returned specie information, so had to write how to pass by that information when parsing through "included" as a whole.
+  * First was that pet information was listed in the "data", with the picture links in the "included" dictionary. Pet listings would have a picture ID value that corresponded with a picture ID value in the "included" dictionary relating to 3 photos (small, medium, and large file sizes of the same photo). The difficult part was that "included" didn't only return pictures as it's dictionary items, it also returned specie information, so had to write how to pass by that information when parsing through "included" as a whole.
   
-  * Second being the pet listings weren't standardized. Sometimes there wouldn't be photos, and if there was no photos, there was no default value. That photo key didn't exist in that pet listing. There was also the possibility the pet had multiple photos uploaded. This made the "data" dictionary containing all the pets potentially much shorter than the "included" dictionary containing all of the possible photos. For example: a search of 25 pets would return 45 objects of photos and species information in the "included" dictionary.
+  * Second was that the pet listings weren't standardized. Sometimes there wouldn't be photos, and if there was no photos, there was no default value. That photo key didn't exist in that pet listing. There was also the possibility the pet had multiple photos uploaded. This made the "data" dictionary containing all the pets potentially much shorter than the "included" dictionary containing all of the possible photos. For example: a search of 25 pets would return 45 objects of photos and species information in the "included" dictionary.
   
-To work with this, created two while loops. The first was to get all possible picture IDs from the "included" dictionary and add to a list. The second was to loop over every pet listing in "data". Each attribute of the pet I wanted, I added to corresponding lists. To get the correct picture, I had to use a for loop inside my while loop to check if that pet instance had a photo ID and if it did, cross check with the list of possible photo IDs, and if there was a match, add the corresponding picture url to a list.
+To work with this, I created two while loops. The first was to get all possible picture IDs from the "included" dictionary (avoiding specie information) and add to a list. The second was to loop over every pet listing in "data". Each attribute of the pet I wanted, I added to corresponding lists. To get the correct picture, I had to use a for loop inside my while loop to check if that pet instance had a photo ID and if it did, cross check with the list of possible photo IDs, and if there was a match, add the corresponding picture url to a list.
 
 The lists represented an individual pet in sequence. Then to display on the page, the lists were zipped to be looped through on the search results web page to be shown to the user.
 
@@ -168,4 +168,10 @@ path('rescue/<str:animal_filter>/<int:number_of_results>/', views.rescue_groups,
 
 ## Conclusion & Skills Learned:
 
+  * Working as a team with remote communication via Slack and participate in daily SCRUM meetings
 
+  * Utilizing project management software, specifically experience with Azure, as well as utilizing VCS
+  
+  * Interacting with database information via Django, populating fields based on other field's post data, and displaying database info to users in a legible format
+  
+  * How to be adaptive in parsing through JSON data. Every API is different and being challenged with this project in particular improved my active problem solving skills
