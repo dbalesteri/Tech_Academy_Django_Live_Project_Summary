@@ -2,13 +2,17 @@
 
 Over the past two weeks, as part of the Software Development Bootcamp  with The Tech Academy, I was tasked to be part of a team creating our own site application that was part of a larger overarching project called App Builder 9000.
 
+#### Appbuilder 9000 with various student sections
 ![app_builder_gif](app_builder_main.gif)
 
 This Live Project involved utilizing Microsoft Azure for project management, Git as the VCS, PyCharm as the IDE, and the Django framework.
 
-All students were assigned user stories to complete in the two week sprint, adding increasingly more functionality and design to their section for users to interact with database information, as well as a chosen API. These user stories covered both front-end and back-end work in increasing difficulty. The project was meant to teach students team skills with working with version control as part of a team, using a project management software, participating in daily SCRUM meetings, as well as technical skills with expanding on using the Django framework's Model-View-Form structure to dynamically displaydatabase information to users, and interact with an API to display json data.
+All students were assigned user stories to complete in the two week sprint, adding increasingly more functionality and design to their section for users to interact with database information, as well as a chosen API. These user stories covered both front-end and back-end work in increasing difficulty. The project was meant to teach students team skills with working with version control as part of a team, using a project management software, participating in daily SCRUM meetings, as well as technical skills with expanding on [using the Django framework's Model-View-Form structure to dynamically display database information to users](#database), and [interact with an API to display json data.](#json)
 
+#### Azure assigned user stories:
 ![azure stories](azure_stories2.PNG)
+
+#### Azure team story board
 ![user story boards](user_story_boards.PNG)
 
 
@@ -21,7 +25,7 @@ All students were assigned user stories to complete in the two week sprint, addi
 
 
 
-### Interacting with the database:
+### <a name="database"></a>Interacting with the database:
 
 The site allowed individuals to post pet listings to display with various fields saved to a AvailablePet model: Name, Birthday(using a date-picker widget), Breed, Color, Contact Email, Location(using dropdown list of state abbreviations), Animal Type(dropdown list of available animal types to choose from), and a Description field(using a Text Area widget). This model also had a char field called "age", which was populated directly through user input, but a result of a function I wrote passing in the submitted Birthday date-widget information as an argument.
 
@@ -29,17 +33,21 @@ It also allowed individuals to post themselves as willing applicants to be conta
 
 For functionality of two forms to work on the same page, I added statements to check which submit button was being used in the post-request. The screenshots below shows the view for the page, and the function for populating the "age" field in the pet model in my desired format.
 
+#### View for application page
 ![applicant view](applicant_view.PNG)
+
+#### Age calculation function based on date-picker widget's Birthday field from user input
 ![age calculation](age_calculation.PNG)
 
 In viewing listings, the user is able to click more info, passing that pet's primary key into the url to view more details. The details page let's users delete the listing, with a pop-up modal asking if they're sure they want to delete that instance's name as defined in the modal: self.name + " the " + self.breed, and it also let's them edit the listing, with a confirmation page showing the pet instance's name they edited.
 
+#### Edit pet listing example
 ![edit pet details_gif](edit_details.gif)
 
 
 
 
-### Parsing through JSON data from API
+### <a name="json"></a>Parsing through JSON data from API
 
 This section of the project was tough, as the information returned from this API wasn't as straight forward to work with as others that I've encountered. The API request returned 3 dictionaries:
 
@@ -59,14 +67,15 @@ The lists represented an individual pet in sequence. Then to display on the page
 
 #### View of search results:
 
-def rescue_groups(request, animal_filter, number_of_results):
+```python
+ def rescue_groups(request, animal_filter, number_of_results):
     if animal_filter == "dogs":
         animal_filter = "/dogs"
     elif animal_filter == "cats":
         animal_filter = "/cats"
     else:
         animal_filter = ""
-
+        
     url = 'https://api.rescuegroups.org/v5/public/animals/search' + animal_filter + '?limit=' + str(number_of_results) + '&include=pictures,species&fields%5Banimals%5D=name,sex,breedPrimary,descriptionText,id,sizeGroup&fields%5Bpictures%5D=large&fields%5Bspecies%5D=singular'
     header = {
         'Authorization': 'my personal api key'
@@ -131,7 +140,32 @@ def rescue_groups(request, animal_filter, number_of_results):
     pet_list = zip(names, species, breeds, sexes, descriptions, pet_pictures)
     content = {'pet_list': pet_list}
     return render(request, 'FindPetApp/rescue_group.html', content)
+```
+
+The arguments for this view come from the filter view's user input:
+
+```python
+def rescue_groups_filter(request):
+    form = FilterForm(data=request.POST)
+    if request.method == "POST":
+        if form.is_valid():
+            animal_filter = request.POST.get('animal_filter')
+            number_of_results = request.POST.get("number_of_results")
+            return redirect('rescue_groups', animal_filter, number_of_results)
+    context = {'form': form}
+    return render(request, 'FindPetApp/rescue_groups_filter.html', context)
+```
+
+and passing into the url for the search results:
+```python
+path('rescue/<str:animal_filter>/<int:number_of_results>/', views.rescue_groups, name="rescue_groups"),
+```
     
 #### Listings from API:
 
 ![api results_gif](api_results.gif)
+
+
+## Conclusion & Skills Learned:
+
+
