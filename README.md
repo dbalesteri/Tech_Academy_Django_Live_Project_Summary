@@ -161,7 +161,7 @@ and passing into the url for the search results:
 path('rescue/<str:animal_filter>/<int:number_of_results>/', views.rescue_groups, name="rescue_groups"),
 ```
     
-#### Listings from API:
+#### Example of listings from API:
 
 ![api results_gif](api_results.gif)
 
