@@ -49,6 +49,8 @@ In viewing listings, the user is able to click more info, passing that pet's pri
 
 ### <a name="json"></a>Parsing through JSON data from API
 
+https://test1-api.rescuegroups.org/v5/public/docs#endpoint-reference
+
 This section of the project was tough, as the information returned from this API wasn't as straight forward to work with as others that I've encountered. The API request returned 3 dictionaries:
 
   1. "data" containing all pet listings
