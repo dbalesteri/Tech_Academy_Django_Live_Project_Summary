@@ -1,4 +1,4 @@
-# Tech_Academy_Live_Project_Summary
+# Tech_Academy_Django_Live_Project_Summary
 
 Over the past two weeks, as part of the Software Development Bootcamp  with The Tech Academy, I was tasked to be part of a team creating our own site application that was part of a larger overarching project called App Builder 9000.
 
