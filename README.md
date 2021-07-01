@@ -36,9 +36,6 @@ For functionality of two forms to work on the same page, I added statements to c
 #### View for application page
 ![applicant view](applicant_view.PNG)
 
-#### Age calculation function based on date-picker widget's Birthday field from user input
-![age calculation](age_calculation.PNG)
-
 In viewing listings, the user is able to click more info, passing that pet's primary key into the url to view more details. The details page let's users delete the listing, with a pop-up modal asking if they're sure they want to delete that instance's name as defined in the modal: self.name + " the " + self.breed, and it also let's them edit the listing, with a confirmation page showing the pet instance's name they edited.
 
 #### Edit pet listing example
